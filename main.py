@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, render_template, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
 
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:12345@localhost:8889/build-a-blog'
@@ -39,13 +40,17 @@ def newpost():
         blog_date = request.form['date']
 
         #validation of an entry for blog_title and blog_body#
-        if not empty_field(blog_title):  
-            flash('Title for blog required.')
+        if not empty_field(blog_title) and not empty_field(blog_body):
+            flash ('Error: Title and blog entry required.')
             return redirect('/newpost')
-        else:
-            if not empty_field(blog_body):
-                flash('Blog entry required')
-                return redirect('/newpost')
+        elif not empty_field(blog_title):  
+            flash('Error: Title for blog required.')
+            return redirect('/newpost')
+        elif not empty_field(blog_body):
+            flash('Error: Blog entry required.')
+            return redirect('/newpost')
+
+
 
         newblog = Blog(blog_title, blog_body, blog_day, blog_date)
 
