@@ -36,7 +36,6 @@ def newpost():
         blog_title = request.form['title']
         blog_body = request.form['body']
         blog_day = request.form.get('day')
-        #blog_day = request.form['day'] -- caused an error don't know why
         blog_date = request.form['date']
 
         #validation of an entry for blog_title and blog_body#
@@ -72,8 +71,7 @@ def blog():
         return render_template('newpost.html', title='Blog', newblog=newblog)
     else:
         allblogs = Blog.query.all()
-        #how this is indented here makes all the difference
-        #teacher talked about this (find out what it is called again)
+        
     return render_template('blogall.html', title='blog', allblogs=allblogs)
 
 if __name__ == '__main__':
